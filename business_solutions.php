@@ -23,6 +23,37 @@ if(isset($_POST['province'])){
 		}
 		$var1 = json_encode($array);
 	}
+	$industry = $_POST["sector"];
+	$query="SELECT * FROM gdp1 where sector_id = $industry";
+	$result = mysql_query($query);
+	if (!$result) {
+		die('Invalid query: ' . mysql_error());
+	}
+	else{
+		$array = array();
+		while ($row = mysql_fetch_assoc($result)) {
+			$tmpArray = array(
+				'Year' => $row['year'],
+				'Value' => $row['value']
+			);
+			array_push($array,$tmpArray);
+			/* echo "Age group: ".$row['agegroup'].'<br>';
+			echo "Value: ".$row['value'].'<br>'; */
+		}
+		$var2_gdp = json_encode($array);
+		
+		
+	}
+	$query="SELECT MAX(value), MIN(value) FROM gdp1 where sector_id = $industry group by sector_id";
+	$result = mysql_query($query);
+	$maxValue = "";
+	$minValue = "";
+	while ($row = mysql_fetch_assoc($result)) {
+			// print_r($row);
+			// exit();
+			$maxValue = $row['MAX(value)'];
+			$minValue = $row['MIN(value)'];
+		}
 }
 // print_r($_POST);
 function get_city_details(){
@@ -44,6 +75,8 @@ function get_city_details(){
 		<link rel="stylesheet" href="style.css" type="text/css">
         <script type="text/javascript" src="http://www.amcharts.com/lib/3/amcharts.js"></script>
 		<script type="text/javascript" src="http://www.amcharts.com/lib/3/pie.js"></script>
+		 <script src="amcharts/serial.js" type="text/javascript"></script>
+        <script src="amcharts/themes/dark.js" type="text/javascript"></script>
         <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
         <script type="text/javascript">
             var chart;
@@ -87,6 +120,47 @@ function get_city_details(){
                 chart.write("chartdiv");
             });
         </script>
+		
+		<script>
+			 var chart = AmCharts.makeChart("chartdiv1", {
+                "type": "serial",
+                "theme": "light",
+                "pathToImages": "../amcharts/images/",
+                "dataProvider": <?php echo $var2_gdp ?>,
+				"valueAxes": [{
+                    "maximum": <?php echo $maxValue+500 ?>,
+                    "minimum": <?php echo $minValue-500 ?>,
+                    "axisAlpha": 0,
+                    "guides": [{
+                        "fillAlpha": 0.1,
+                        "fillColor": "#CC0000",
+                        "lineAlpha": 0,
+                        "toValue": 120,
+                        "value": 0
+                    }, {
+                        "fillAlpha": 0.1,
+                        "fillColor": "#0000cc",
+                        "lineAlpha": 0,
+                        "toValue": 200,
+                        "value": 120
+                    }]
+                }],
+                "graphs": [{
+                    "bullet": "round",
+                    "dashLength": 4,
+                    "valueField": "Value"
+                }],
+                "chartCursor": {
+                    "cursorAlpha": 0
+                },
+                "categoryField": "Year",
+                "categoryAxis": {
+                    "parseDates": false
+                }
+            });
+		
+		
+		</script>
 		<script src="js/jquery.min.js"></script>
 		<script src="js/jquery.dropotron.min.js"></script>
 		<script src="js/jquery.scrolly.min.js"></script>
@@ -207,6 +281,14 @@ $(document).ready(function(){
 						if(isset($_POST) and isset($_POST['province']) and $_POST['province']!=0){
 							echo "<span><b>Population by age group</b><span>";
 							echo "<div id='chartdiv' style='width: 50%; height: 200px;'></div>";
+							$query="SELECT name FROM sector where sector_id = ".$_POST["sector"].";";
+							$result = mysql_query($query);
+							$name ="";
+							while ($row = mysql_fetch_assoc($result)) {
+								$name = $row['name'];
+							}
+							echo "<span><b>GDP for ".$name."</b><span>";
+							echo "<div id='chartdiv1' style='width: 80%; height: 200px;'></div>";
 						}
 					?>
 					<?php 
