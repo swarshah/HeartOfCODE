@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 22, 2015 at 05:02 PM
+-- Generation Time: Feb 22, 2015 at 10:12 PM
 -- Server version: 5.6.16
 -- PHP Version: 5.5.9
 
@@ -35,6 +35,12 @@ CREATE TABLE IF NOT EXISTS `city` (
   PRIMARY KEY (`c_id`),
   KEY `p_id` (`p_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- RELATIONS FOR TABLE `city`:
+--   `p_id`
+--       `province` -> `p_id`
+--
 
 --
 -- Dumping data for table `city`
@@ -103,7 +109,9 @@ INSERT INTO `city` (`c_id`, `cityname`, `p_id`) VALUES
 (60, 'Thompson-Okanagan', 3),
 (61, 'Kootenay', 3),
 (62, 'Cariboo', 3),
-(63, 'North Coast and Nechako', 3);
+(63, 'North Coast and Nechako', 3),
+(64, 'Carmacks', 12),
+(65, 'Dawson', 12);
 
 -- --------------------------------------------------------
 
@@ -221,6 +229,12 @@ CREATE TABLE IF NOT EXISTS `population` (
   `value` decimal(10,2) NOT NULL,
   KEY `p_id` (`p_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- RELATIONS FOR TABLE `population`:
+--   `p_id`
+--       `province` -> `p_id`
+--
 
 --
 -- Dumping data for table `population`
@@ -347,6 +361,14 @@ CREATE TABLE IF NOT EXISTS `totalemployed` (
   KEY `sector_id` (`sector_id`,`p_id`),
   KEY `p_id` (`p_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- RELATIONS FOR TABLE `totalemployed`:
+--   `p_id`
+--       `province` -> `p_id`
+--   `sector_id`
+--       `sector` -> `sector_id`
+--
 
 --
 -- Dumping data for table `totalemployed`
@@ -2008,23 +2030,23 @@ CREATE TABLE IF NOT EXISTS `weeklywages` (
 --
 
 INSERT INTO `weeklywages` (`sector_id`, `wages`) VALUES
-(1, '1,047.07'),
-(2, '1,879.33'),
-(3, '1,652.08'),
-(4, '1,187.73'),
-(5, '1,019.80'),
-(7, '1,077.84'),
+(1, '1047.07'),
+(2, '1879.33'),
+(3, '1652.08'),
+(4, '1187.73'),
+(5, '1019.80'),
+(7, '1077.84'),
 (7, '527.72'),
 (8, '970.46'),
-(14, '1,136.44'),
-(9, '1,112.93'),
+(14, '1136.44'),
+(9, '1112.93'),
 (9, '868.32'),
-(10, '1,274.06'),
+(10, '1274.06'),
 (12, '988.14'),
 (13, '833.51'),
 (14, '562.7'),
 (15, '362.38'),
-(17, '1,173.09'),
+(17, '1173.09'),
 (16, '751.61');
 
 --
@@ -2049,12 +2071,6 @@ ALTER TABLE `population`
 ALTER TABLE `totalemployed`
   ADD CONSTRAINT `totalemployed_ibfk_2` FOREIGN KEY (`p_id`) REFERENCES `province` (`p_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `totalemployed_ibfk_1` FOREIGN KEY (`sector_id`) REFERENCES `sector` (`sector_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `weeklywages`
---
-ALTER TABLE `weeklywages`
-  ADD CONSTRAINT `weeklywages_ibfk_1` FOREIGN KEY (`sector_id`) REFERENCES `sector` (`sector_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
