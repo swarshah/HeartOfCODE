@@ -67,10 +67,12 @@ function get_city_details(){
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>CODE-EDOC</title>
+		<title>HeartOfCODE</title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
+		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+		<link rel="icon" href="favicon.ico" type="image/x-icon">
 		<!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="style.css" type="text/css">
         <script type="text/javascript" src="http://www.amcharts.com/lib/3/amcharts.js"></script>
@@ -293,10 +295,15 @@ $(document).ready(function(){
 					?>
 					<?php 
 					if(isset($_POST) and isset($_POST['province'])){
-						$query = "SELECT c_id, cityname, p_id FROM city";
+						$query="select c.c_id, c.cityname, p.p_id, p.name, wages, totalemp 
+							from weeklywages w 
+							left join totalemployed e on w.sector_id = e.sector_id 
+							left join province p on p.p_id = e.p_id 
+							left join city c on c.p_id = p.p_id 
+							where w.sector_id = '".$_POST['sector']."'";
 						$where="";
 						if($_POST['province']!=0){
-							$where=" where p_id=".$_POST['province'];
+							$where=" and p.p_id='".$_POST['province']."'";
 						}
 						$query = $query.$where.";";
 						$result = mysql_query($query) or die(mysql_error()."[".$query."]");
@@ -311,7 +318,15 @@ $(document).ready(function(){
 						</h3>
 						<div class="row fade" id="div-<?php echo $row['c_id']; ?>" style="display:none;padding: 0px 100px 100px 100px;background: aquamarine;margin: 0px 0 0px 0px;">
 							<p>
-								<?php echo $row['cityname']; ?> is the largest city.
+								<p>
+									<b>Province : <?php echo $row['name'];?></b> 
+								</p>
+								<p>
+									<b>Average Weekly wages : <?php echo "$ ".$row['wages'];?></b> 
+								</p>
+								<p>
+									<b>Total productive employees (x1000) : <?php echo $row['totalemp'];?></b> 
+								</p>
 							</p>
 						</div>
 						<p style="background: white;"></p>
