@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 22, 2015 at 02:34 PM
+-- Generation Time: Feb 22, 2015 at 05:02 PM
 -- Server version: 5.6.16
 -- PHP Version: 5.5.9
 
@@ -35,12 +35,6 @@ CREATE TABLE IF NOT EXISTS `city` (
   PRIMARY KEY (`c_id`),
   KEY `p_id` (`p_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- RELATIONS FOR TABLE `city`:
---   `p_id`
---       `province` -> `p_id`
---
 
 --
 -- Dumping data for table `city`
@@ -119,26 +113,21 @@ INSERT INTO `city` (`c_id`, `cityname`, `p_id`) VALUES
 
 CREATE TABLE IF NOT EXISTS `gdp1` (
   `year` int(11) NOT NULL,
-  `p_id` int(3) NOT NULL,
+  `sector_id` int(3) NOT NULL,
   `value` double NOT NULL,
-  KEY `p_id` (`p_id`)
+  KEY `sector_id` (`sector_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `gdp1`
 --
 
-INSERT INTO `gdp1` (`year`, `p_id`, `value`) VALUES
+INSERT INTO `gdp1` (`year`, `sector_id`, `value`) VALUES
 (2007, 6, 1004204),
 (2008, 6, 1048243),
 (2009, 6, 1061538),
 (2010, 6, 1107296),
 (2011, 6, 1161936),
-(2007, 0, 63036),
-(2008, 0, 64456),
-(2009, 0, 66515),
-(2010, 0, 68973),
-(2011, 0, 72365),
 (2007, 1, 23141),
 (2008, 1, 28579),
 (2009, 1, 23169),
@@ -232,12 +221,6 @@ CREATE TABLE IF NOT EXISTS `population` (
   `value` decimal(10,2) NOT NULL,
   KEY `p_id` (`p_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- RELATIONS FOR TABLE `population`:
---   `p_id`
---       `province` -> `p_id`
---
 
 --
 -- Dumping data for table `population`
@@ -364,14 +347,6 @@ CREATE TABLE IF NOT EXISTS `totalemployed` (
   KEY `sector_id` (`sector_id`,`p_id`),
   KEY `p_id` (`p_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- RELATIONS FOR TABLE `totalemployed`:
---   `p_id`
---       `province` -> `p_id`
---   `sector_id`
---       `sector` -> `sector_id`
---
 
 --
 -- Dumping data for table `totalemployed`
@@ -2027,12 +2002,6 @@ CREATE TABLE IF NOT EXISTS `weeklywages` (
   `wages` text NOT NULL,
   KEY `sector_id` (`sector_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- RELATIONS FOR TABLE `weeklywages`:
---   `sector_id`
---       `sector` -> `sector_id`
---
 
 --
 -- Dumping data for table `weeklywages`
