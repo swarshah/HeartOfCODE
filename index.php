@@ -31,23 +31,7 @@
 <?php
 
 
-function connect(){
-	$link = mysql_connect('localhost', 'root', '');
-	if (!$link) {
-		die('Could not connect: ' . mysql_error());
-	}
-	// echo 'Connected successfully';
-	
-	$db_selected = mysql_select_db('code', $link);
-	if (!$db_selected) {
-		die ('Can\'t use foo : ' . mysql_error());
-	}
-	return $link;
-}
-
-function close_db(){
-	mysql_close($link);
-}
+include 'connection.php';
 connect();
 
 ?>
@@ -68,34 +52,15 @@ connect();
 						</footer>
 					</div>
 				
-				<!-- Nav 
+				<!-- Nav -->
 					<nav id="nav">
 						<ul>
-							<li><a href="index.html">Home</a></li>
-							<li>
-								<a href="">Dropdown</a>
-								<ul>
-									<li><a href="#">Lorem ipsum dolor</a></li>
-									<li><a href="#">Magna phasellus</a></li>
-									<li><a href="#">Etiam dolore nisl</a></li>
-									<li>
-										<a href="">And a submenu &hellip;</a>
-										<ul>
-											<li><a href="#">Lorem ipsum dolor</a></li>
-											<li><a href="#">Phasellus consequat</a></li>
-											<li><a href="#">Magna phasellus</a></li>
-											<li><a href="#">Etiam dolore nisl</a></li>
-										</ul>
-									</li>
-									<li><a href="#">Veroeros feugiat</a></li>
-								</ul>
-							</li>
-							<li><a href="left-sidebar.html">Left Sidebar</a></li>
-							<li><a href="right-sidebar.html">Right Sidebar</a></li>
-							<li><a href="no-sidebar.html">No Sidebar</a></li>
+							<li><a href="index.php">Home</a></li>
+							<li><a href="business_solutions.php">Business</a></li>
+							<li><a href="credentials.php">Credentials</a></li>
 						</ul>
 					</nav>
--->
+
 			</div>
 			
 		<!-- Banner -->
@@ -118,9 +83,8 @@ connect();
 								?> 
 							</select>
 							<br>
-							<label for="sector">Sector</label>
+							<label for="sector">Industry</label>
 							<select id="sector" name="sector">
-								<option id="default" name="default" value="0">--select--</option>
 								<?php 
 									$query = "SELECT sector_id, name FROM sector";
 									$result = mysql_query($query) or die(mysql_error()."[".$query."]");

@@ -1,10 +1,17 @@
 <?php
-$link = mysql_connect('localhost', 'root', '');
-if (!$link) {
-    die('Not connected : ' . mysql_error());
+function connect(){
+	$link = mysql_connect('localhost', 'root', '');
+	if (!$link) {
+		die('Could not connect: ' . mysql_error());
+	}
+	$db_selected = mysql_select_db('code', $link);
+	if (!$db_selected) {
+		die ('Can\'t use foo : ' . mysql_error());
+	}
+	return $link;
 }
-$db = mysql_select_db('code', $link);
-if (!$db) {
-    die ('Can\'t use code : ' . mysql_error());
+
+function close_db(){
+	mysql_close($link);
 }
 ?>
