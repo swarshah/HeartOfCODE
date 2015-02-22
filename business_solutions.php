@@ -122,7 +122,7 @@ $(document).ready(function(){
 	<body class="homepage">
 		<h2 style="text-align: center;"><a href="#">Listed out according to the major cities.</a></h2>
 		<!-- Banner -->
-					<div id="chartdiv" style="width: 50%; height: 200px;"></div>
+					
 			<div>
 				<div id="banner" style="float:left;background-color:#2b252c;">
 						<article id="main" class="container special" style="width: 300px;float: left;margin-left: 30px;margin-right: 30px;">
@@ -210,6 +210,7 @@ $(document).ready(function(){
 
 				<!-- Features -->
 				<div id="features" class="" style="margin-left: 360px;">
+					<div id="chartdiv" style="width: 50%; height: 200px;"></div>
 					<?php foreach([1, 2, 3, 4, 5, 6] as $i){?>
 					<h3>
 
