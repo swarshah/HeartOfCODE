@@ -48,13 +48,14 @@ connect();
 ?>
 <script>
 $(document).ready(function(){
-    $(".butn").click(function(this){
-        $("this").fadeToggle("slow");
+    $(".button").click(function(){
+		var val='#div-'+$(this).val();
+        $(val).fadeToggle("slow");
     });
 });
 </script>
 	<body class="homepage">
-		<h2 style="text-align: center;margin-top: 15px;margin-bottom: 50px;"><a href="#">Listed out according to the major cities.</a></h2>
+		<h2 style="text-align: center;"><a href="#">Listed out according to the major cities.</a></h2>
 		<!-- Banner -->
 			<div>
 				<div id="banner" style="float:left;background-color:#2b252c;">
@@ -143,25 +144,29 @@ $(document).ready(function(){
 
 				<!-- Features -->
 				<div id="features" class="" style="margin-left: 360px;">
-					<?php foreach([1,2,3] as $i){?>
-					<div class="row" id="clickme<?php echo $i; ?>" style="padding: 0px 0 65px 100px;">
-							<h3><a href="#">Gravida aliquam penatibus</a><button class="button butn" value="Open">Open</button></h3>
-							<p>
-								Amet nullam fringilla nibh nulla convallis tique ante proin sociis accumsan lobortis. Auctor etiam
-								porttitor phasellus tempus cubilia ultrices tempor sagittis. Nisl fermentum consequat integer interdum.
-							</p>
+					<?php foreach([1, 2, 3, 4, 5, 6] as $i){?>
+					<h3>
+
+						<button class="button" style="padding:1.65em 40.5em 1.65em 40.5em;" value="<?php echo $i; ?>" id="<?php echo $i; ?>" >Gravida aliquam penatibus</button>
+					</h3>
+					<div class="row fade" id="div-<?php echo $i; ?>" style="display:none;padding: 0px 100px 100px 100px;background: aquamarine;margin: 0px 0 0px 0px;">
+						<p>
+							Amet nullam fringilla nibh nulla convallis tique ante proin sociis accumsan lobortis. Auctor etiam
+							porttitor phasellus tempus cubilia ultrices tempor sagittis. Nisl fermentum consequat integer interdum.
+						</p>
 					</div>
+					<p style="background: white;"></p>
 					<?php }?>
 				</div>
 			</div>
 		<!-- Footer -->
-			<div id="footer" style="clear: both;">
+		<!--	<div id="footer" style="clear: both;">
 				<div class="container">
 					<div class="row">
-						<div class="12u">
+						<div class="12u"> -->
 							
 							<!-- Contact -->
-								<section class="contact">
+						<!--		<section class="contact">
 									<header>
 										<h3>Nisl turpis nascetur interdum?</h3>
 									</header>
@@ -174,10 +179,10 @@ $(document).ready(function(){
 										<li><a href="#" class="icon fa-dribbble"><span class="label">Dribbble</span></a></li>
 										<li><a href="#" class="icon fa-linkedin"><span class="label">Linkedin</span></a></li>
 									</ul>
-								</section>
+								</section>  -->
 							
 							<!-- Copyright -->
-								<div class="copyright">
+							<!--	<div class="copyright">
 									<ul class="menu">
 										<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
 									</ul>
@@ -187,6 +192,6 @@ $(document).ready(function(){
 					
 					</div>
 				</div>
-			</div>
+			</div> -->
 	</body>
 </html>
