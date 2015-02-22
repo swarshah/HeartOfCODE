@@ -1,10 +1,12 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>CODE-EDOC</title>
+		<title>HeartOfCODE</title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
+		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+		<link rel="icon" href="favicon.ico" type="image/x-icon">
 		<!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
 		<script src="js/jquery.min.js"></script>
 		<script src="js/jquery.dropotron.min.js"></script>
@@ -54,8 +56,8 @@
 					</header>
 						<p>
 							<b>Earnings, average weekly, by industry (All industries)</b>
-							<a style="cursor:pointer;" href="http://www.statcan.gc.ca/tables-tableaux/sum-som/l01/cst01/labr73a-eng.htm" target="new">
-								http://www.statcan.gc.ca/tables-tableaux/sum-som/l01/cst01/labr73a-eng.htm
+							<a style="cursor:pointer;" href="http://open.canada.ca/data/en/dataset/ddfac6b9-d32a-4067-8d63-76eaa55722c5" target="new">
+								http://open.canada.ca/data/en/dataset/ddfac6b9-d32a-4067-8d63-76eaa55722c5
 							</a>
 						</p>
 
@@ -69,8 +71,8 @@
 						
 						<p>
 							<b>Population by sex and age group, by province and territory</b>
-							<a style="cursor:pointer;" href="http://open.canada.ca/data/en/dataset/b77b101f-c00b-4ae8-8ff9-195bbfdee559" target="new">
-								http://open.canada.ca/data/en/dataset/b77b101f-c00b-4ae8-8ff9-195bbfdee559
+							<a style="cursor:pointer;" href="http://data.un.org/Data.aspx?q=Population+by+sex+and+age+group&d=GenderStat&f=inID%3a6" target="new">
+								http://data.un.org/Data.aspx?q=Population+by+sex+and+age+group&d=GenderStat&f=inID%3a6
 							</a>
 						</p>
 						
@@ -78,8 +80,8 @@
 						<p>
 							<b>Gross domestic product (GDP) at basic prices, by North American Industry Classification System (NAICS), provinces and territories
 annual (percentage share)</b>
-							<a style="cursor:pointer;" href="http://www5.statcan.gc.ca/cansim/a46?lang=eng&childId=3790028&CORId=3764&viewId=1" target="new">
-								http://www5.statcan.gc.ca/cansim/a46?lang=eng&childId=3790028&CORId=3764&viewId=1
+							<a style="cursor:pointer;" href="http://open.canada.ca/data/en/dataset/d1c6706e-498d-401e-8bbd-8e7478a8b308" target="new">
+								http://open.canada.ca/data/en/dataset/d1c6706e-498d-401e-8bbd-8e7478a8b308
 							</a>
 						</p>
 						
