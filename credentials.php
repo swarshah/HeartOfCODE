@@ -64,18 +64,24 @@
 						<p>
 							<b>Employment by major industry group, seasonally adjusted, by province (monthly) 
 (Canada)</b>
-							<a style="cursor:pointer;" href="http://www.statcan.gc.ca/tables-tableaux/sum-som/l01/cst01/labr67a-eng.htm" target="new">
-								http://www.statcan.gc.ca/tables-tableaux/sum-som/l01/cst01/labr67a-eng.htm
+							<a style="cursor:pointer;" href="http://open.canada.ca/data/en/dataset/ba58e6a3-5297-4553-8302-995faa2cd0f4" target="new">
+								http://open.canada.ca/data/en/dataset/ba58e6a3-5297-4553-8302-995faa2cd0f4
 							</a>
 						</p>
 						
 						<p>
-							<b>Population by sex and age group, by province and territory</b>
+							<b>Population by sex and broad age group</b>
 							<a style="cursor:pointer;" href="http://data.un.org/Data.aspx?q=Population+by+sex+and+age+group&d=GenderStat&f=inID%3a6" target="new">
 								http://data.un.org/Data.aspx?q=Population+by+sex+and+age+group&d=GenderStat&f=inID%3a6
 							</a>
 						</p>
 						
+						<p>
+							<b>Population by sex and age group, by province and territory</b>
+							<a style="cursor:pointer;" href="http://open.canada.ca/data/en/dataset/fb9bdb3a-4e65-47f4-8cb6-557c761971b9" target="new">
+								http://open.canada.ca/data/en/dataset/fb9bdb3a-4e65-47f4-8cb6-557c761971b9
+							</a>
+						</p>
 						
 						<p>
 							<b>Gross domestic product (GDP) at basic prices, by North American Industry Classification System (NAICS), provinces and territories
