@@ -1,19 +1,6 @@
 <?php
-function connect(){
-	$link = mysql_connect('localhost', 'root', '');
-	if (!$link) {
-		die('Could not connect: ' . mysql_error());
-	}
-	$db_selected = mysql_select_db('code', $link);
-	if (!$db_selected) {
-		die ('Can\'t use foo : ' . mysql_error());
-	}
-	return $link;
-}
 
-function close_db(){
-	mysql_close($link);
-}
+include 'connection.php';
 connect();
 
 if(isset($_POST['province'])){
@@ -116,7 +103,7 @@ function get_city_details(){
 		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
 	</head>
 
-	
+
 
 <script>
 $(document).ready(function(){
@@ -154,9 +141,8 @@ $(document).ready(function(){
 										}
 									?> 
 								</select>
-								<label for="sector">Sector</label>
+								<label for="sector">Industry</label>
 								<select id="sector" name="sector">
-									<option id="default" name="default" value="0">--select--</option>
 									<?php 
 										$query = "SELECT sector_id, name FROM sector";
 										$result = mysql_query($query) or die(mysql_error()."[".$query."]");
@@ -219,6 +205,7 @@ $(document).ready(function(){
 				<div id="features" class="" style="margin-left: 360px;">
 					<?php
 						if(isset($_POST) and isset($_POST['province']) and $_POST['province']!=0){
+							echo "<span><b>Population by age group</b><span>";
 							echo "<div id='chartdiv' style='width: 50%; height: 200px;'></div>";
 						}
 					?>
@@ -249,7 +236,6 @@ $(document).ready(function(){
 					<?php }?>
 				</div>
 			</div>
-
 
 	</body>
 </html>
