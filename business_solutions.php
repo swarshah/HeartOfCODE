@@ -112,15 +112,17 @@ if(isset($_POST['province'])){
 	
 
 <script>
-/*$(document).ready(function(){
-    $(".butn").click(function(this){
-        $("this").fadeToggle("slow");
+$(document).ready(function(){
+    $(".button").click(function(){
+		var val='#div-'+$(this).val();
+        $(val).fadeToggle("slow");
     });
-});*/
+});
 </script>
 	<body class="homepage">
-		<h2 style="text-align: center;margin-top: 15px;margin-bottom: 50px;"><a href="#">Listed out according to the major cities.</a></h2>
+		<h2 style="text-align: center;"><a href="#">Listed out according to the major cities.</a></h2>
 		<!-- Banner -->
+					<div id="chartdiv" style="width: 50%; height: 200px;"></div>
 			<div>
 				<div id="banner" style="float:left;background-color:#2b252c;">
 						<article id="main" class="container special" style="width: 300px;float: left;margin-left: 30px;margin-right: 30px;">
@@ -208,12 +210,22 @@ if(isset($_POST['province'])){
 
 				<!-- Features -->
 				<div id="features" class="" style="margin-left: 360px;">
-					
-					<div id="chartdiv" style="width: 50%; height: 200px;"></div>
-					
+					<?php foreach([1, 2, 3, 4, 5, 6] as $i){?>
+					<h3>
+
+						<button class="button" style="padding:1.65em 40.5em 1.65em 40.5em;" value="<?php echo $i; ?>" id="<?php echo $i; ?>" >Gravida aliquam penatibus</button>
+					</h3>
+					<div class="row fade" id="div-<?php echo $i; ?>" style="display:none;padding: 0px 100px 100px 100px;background: aquamarine;margin: 0px 0 0px 0px;">
+						<p>
+							Amet nullam fringilla nibh nulla convallis tique ante proin sociis accumsan lobortis. Auctor etiam
+							porttitor phasellus tempus cubilia ultrices tempor sagittis. Nisl fermentum consequat integer interdum.
+						</p>
+					</div>
+					<p style="background: white;"></p>
+					<?php }?>
 				</div>
 			</div>
-		<!-- Footer -->
+
 
 	</body>
 </html>

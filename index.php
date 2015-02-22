@@ -167,14 +167,14 @@ connect();
 			</section>
 		
 
-		<!-- Footer -->
-			<div id="footer">
+<!-- Footer -->
+		<!--	<div id="footer" style="clear: both;">
 				<div class="container">
 					<div class="row">
-						<div class="12u">
+						<div class="12u"> -->
 							
 							<!-- Contact -->
-								<section class="contact">
+						<!--		<section class="contact">
 									<header>
 										<h3>Nisl turpis nascetur interdum?</h3>
 									</header>
@@ -187,10 +187,10 @@ connect();
 										<li><a href="#" class="icon fa-dribbble"><span class="label">Dribbble</span></a></li>
 										<li><a href="#" class="icon fa-linkedin"><span class="label">Linkedin</span></a></li>
 									</ul>
-								</section>
+								</section>  -->
 							
 							<!-- Copyright -->
-								<div class="copyright">
+							<!--	<div class="copyright">
 									<ul class="menu">
 										<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
 									</ul>
@@ -200,7 +200,7 @@ connect();
 					
 					</div>
 				</div>
-			</div>
+			</div> -->
 
 	</body>
 </html>
