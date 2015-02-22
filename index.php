@@ -45,7 +45,7 @@ connect();
 				<!-- Inner -->
 					<div class="inner">
 						<header>
-							<h1><a href="index.html" id="logo">Business in Canada?</a></h1>
+							<h1><a href="index.php" id="logo">Business in Canada?</a></h1>
 							<hr />
 							<p>With the help of Canadian federal open datasets ensure you have a niche ahead of others</p>
 						</header>
