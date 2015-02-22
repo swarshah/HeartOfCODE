@@ -18,7 +18,7 @@ connect();
 
 if(isset($_POST['province'])){
 	$province = $_POST["province"];
-	$query="SELECT * FROM population where p_id = (SELECT p_id from province where name = '$province');";
+	$query="SELECT * FROM population where p_id = '".$province."'";
 	$result = mysql_query($query);
 	if (!$result) {
 		die('Invalid query: ' . mysql_error());
@@ -38,6 +38,13 @@ if(isset($_POST['province'])){
 	}
 }
 // print_r($_POST);
+function get_city_details(){
+	if(isset($_POST) and isset($_POST['province'])){
+		$query = "SELECT p_id, code, name FROM city where p_id=";
+		$result = mysql_query($query) or die(mysql_error()."[".$query."]");
+	}
+}
+
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -120,9 +127,9 @@ $(document).ready(function(){
 });
 </script>
 	<body class="homepage">
-		<h2 style="text-align: center;"><a href="#">Listed out according to the major cities.</a></h2>
+		<h2 style="text-align: center;"><a href="index.php">Listed out according to the major cities.</a></h2>
 		<!-- Banner -->
-					<div id="chartdiv" style="width: 50%; height: 200px;"></div>
+					
 			<div>
 				<div id="banner" style="float:left;background-color:#2b252c;">
 						<article id="main" class="container special" style="width: 300px;float: left;margin-left: 30px;margin-right: 30px;">
@@ -131,7 +138,7 @@ $(document).ready(function(){
 								<select id="province" name="province">
 									<option id="default" name="default" value="0">All</option>
 									<?php 
-										$query = "SELECT p_id, code, name FROM province";
+										$query = "SELECT p_id, name FROM province";
 										$result = mysql_query($query) or die(mysql_error()."[".$query."]");
 										$code="";
 										if(isset($_POST) and isset($_POST['province'])){ 
@@ -140,10 +147,10 @@ $(document).ready(function(){
 										while ($row = mysql_fetch_array($result))
 										{
 											$sel="";
-											if($code==$row['name']){ 
+											if($code==$row['p_id']){ 
 												$sel="selected";
 											}
-											echo "<option value='".$row['name']."' ".$sel." >".$row['name']."</option>";
+											echo "<option value='".$row['p_id']."' ".$sel." >".$row['name']."</option>";
 										}
 									?> 
 								</select>
@@ -160,10 +167,10 @@ $(document).ready(function(){
 										while ($row = mysql_fetch_array($result))
 										{
 											$sel="";
-											if($code==$row['id']){ 
+											if($code==$row['sector_id']){ 
 												$sel="selected";
 											}
-											echo "<option value='".$row['id']."' ".$sel." >".$row['name']."</option>";
+											echo "<option value='".$row['sector_id']."' ".$sel." >".$row['name']."</option>";
 										}
 									?> 
 								</select>
@@ -182,7 +189,7 @@ $(document).ready(function(){
 									<option value="3" <?php if($value==3){echo "selected";} ?>>> 50000</option> 
 								</select>
 								<label for="labour">No of Labour
-									<input type="text" id="labour" name="labour" value="<?php if(isset($_POST) and isset($_POST['labour']) and $_POST['labour']) { echo $_POST['labour'];} ?>">
+									<input type="text" id="labour" name="labour" value="<?php if(isset($_POST) and isset($_POST['labour'])) { echo $_POST['labour'];} ?>">
 								</label>
 								
 								<div style="text-align: initial;">
@@ -210,18 +217,35 @@ $(document).ready(function(){
 
 				<!-- Features -->
 				<div id="features" class="" style="margin-left: 360px;">
-					<?php foreach([1, 2, 3, 4, 5, 6] as $i){?>
-					<h3>
-
-						<button class="button" style="padding:1.65em 40.5em 1.65em 40.5em;" value="<?php echo $i; ?>" id="<?php echo $i; ?>" >Gravida aliquam penatibus</button>
-					</h3>
-					<div class="row fade" id="div-<?php echo $i; ?>" style="display:none;padding: 0px 100px 100px 100px;background: aquamarine;margin: 0px 0 0px 0px;">
-						<p>
-							Amet nullam fringilla nibh nulla convallis tique ante proin sociis accumsan lobortis. Auctor etiam
-							porttitor phasellus tempus cubilia ultrices tempor sagittis. Nisl fermentum consequat integer interdum.
-						</p>
-					</div>
-					<p style="background: white;"></p>
+					<?php
+						if(isset($_POST) and isset($_POST['province']) and $_POST['province']!=0){
+							echo "<div id='chartdiv' style='width: 50%; height: 200px;'></div>";
+						}
+					?>
+					<?php 
+					if(isset($_POST) and isset($_POST['province'])){
+						$query = "SELECT c_id, cityname, p_id FROM city";
+						$where="";
+						if($_POST['province']!=0){
+							$where=" where p_id=".$_POST['province'];
+						}
+						$query = $query.$where.";";
+						$result = mysql_query($query) or die(mysql_error()."[".$query."]");
+					}
+					$code="";
+					while ($row = mysql_fetch_array($result))
+					{?>
+						<h3>
+							<button class="button" style="padding:1.65em 40.5em 1.65em 40.5em;width:100%" value="<?php echo $row['c_id']; ?>" id="<?php echo $row['c_id']; ?>" >
+								<?php echo $row['cityname']; ?>
+							</button>
+						</h3>
+						<div class="row fade" id="div-<?php echo $row['c_id']; ?>" style="display:none;padding: 0px 100px 100px 100px;background: aquamarine;margin: 0px 0 0px 0px;">
+							<p>
+								<?php echo $row['cityname']; ?> is the largest city.
+							</p>
+						</div>
+						<p style="background: white;"></p>
 					<?php }?>
 				</div>
 			</div>
