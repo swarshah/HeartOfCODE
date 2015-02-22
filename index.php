@@ -109,11 +109,11 @@ connect();
 							<select id="province" name="province">
 								<option id="default" name="default" value="0">All</option>
 								<?php 
-									$query = "SELECT p_id, code, name FROM province";
+									$query = "SELECT p_id, name FROM province";
 									$result = mysql_query($query) or die(mysql_error()."[".$query."]");
 									while ($row = mysql_fetch_array($result))
 									{
-										echo "<option value='".$row['name']."'>".$row['name']."</option>";
+										echo "<option value='".$row['p_id']."'>".$row['name']."</option>";
 									}
 								?> 
 							</select>
