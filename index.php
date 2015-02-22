@@ -126,7 +126,7 @@ connect();
 									$result = mysql_query($query) or die(mysql_error()."[".$query."]");
 									while ($row = mysql_fetch_array($result))
 									{
-										echo "<option value='".$row['id']."'>".$row['name']."</option>";
+										echo "<option value='".$row['sector_id']."'>".$row['name']."</option>";
 									}
 								?> 
 							</select>

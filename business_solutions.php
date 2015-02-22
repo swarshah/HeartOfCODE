@@ -120,7 +120,7 @@ $(document).ready(function(){
 });
 </script>
 	<body class="homepage">
-		<h2 style="text-align: center;"><a href="#">Listed out according to the major cities.</a></h2>
+		<h2 style="text-align: center;"><a href="index.php">Listed out according to the major cities.</a></h2>
 		<!-- Banner -->
 					
 			<div>
@@ -160,10 +160,10 @@ $(document).ready(function(){
 										while ($row = mysql_fetch_array($result))
 										{
 											$sel="";
-											if($code==$row['id']){ 
+											if($code==$row['sector_id']){ 
 												$sel="selected";
 											}
-											echo "<option value='".$row['id']."' ".$sel." >".$row['name']."</option>";
+											echo "<option value='".$row['sector_id']."' ".$sel." >".$row['name']."</option>";
 										}
 									?> 
 								</select>
