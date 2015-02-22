@@ -113,7 +113,7 @@ connect();
 									$result = mysql_query($query) or die(mysql_error()."[".$query."]");
 									while ($row = mysql_fetch_array($result))
 									{
-										echo "<option value='".$row['code']."'>".$row['name']."</option>";
+										echo "<option value='".$row['name']."'>".$row['name']."</option>";
 									}
 								?> 
 							</select>
@@ -122,7 +122,7 @@ connect();
 							<select id="sector" name="sector">
 								<option id="default" name="default" value="0">--select--</option>
 								<?php 
-									$query = "SELECT id, name FROM sector";
+									$query = "SELECT sector_id, name FROM sector";
 									$result = mysql_query($query) or die(mysql_error()."[".$query."]");
 									while ($row = mysql_fetch_array($result))
 									{

@@ -1,3 +1,44 @@
+<?php
+function connect(){
+	$link = mysql_connect('localhost', 'root', '');
+	if (!$link) {
+		die('Could not connect: ' . mysql_error());
+	}
+	$db_selected = mysql_select_db('code', $link);
+	if (!$db_selected) {
+		die ('Can\'t use foo : ' . mysql_error());
+	}
+	return $link;
+}
+
+function close_db(){
+	mysql_close($link);
+}
+connect();
+
+if(isset($_POST['province'])){
+	$province = $_POST["province"];
+	$query="SELECT * FROM population where p_id = (SELECT p_id from province where name = '$province');";
+	$result = mysql_query($query);
+	if (!$result) {
+		die('Invalid query: ' . mysql_error());
+	}
+	else{
+		$array = array();
+		while ($row = mysql_fetch_assoc($result)) {
+			$tmpArray = array(
+				'Age Group' => $row['agegroup'],
+				'Value' => $row['value']
+			);
+			array_push($array,$tmpArray);
+			/* echo "Age group: ".$row['agegroup'].'<br>';
+			echo "Value: ".$row['value'].'<br>'; */
+		}
+		$var1 = json_encode($array);
+	}
+}
+// print_r($_POST);
+?>
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -6,6 +47,52 @@
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
 		<!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="style.css" type="text/css">
+        <script type="text/javascript" src="http://www.amcharts.com/lib/3/amcharts.js"></script>
+		<script type="text/javascript" src="http://www.amcharts.com/lib/3/pie.js"></script>
+        <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+        <script type="text/javascript">
+            var chart;
+            var legend;
+			;
+			/*$.getJSON("getJSONdata.php?province=Ontario", function(data){				
+				chartData = data;
+				console.log(chartData);
+			});*/
+			/*var chartData =(function () {
+    var json = null;
+    $.ajax({
+        'async': false,
+        'global': false,
+        'url': "getJSONdata.php?province=Quebec",
+        'dataType': "json",
+        'success': function (data) {
+            json = data;
+        }
+    });
+    return json;
+})(); */
+            /*var chartData = 
+                [{"Age Group":"0 to 14","Value":"2190.30"},{"Age Group":"15 to 64","Value":"9351.30"},{"Age Group":"65 and older","Value":"2137.10"}];*/
+
+            AmCharts.ready(function () {
+                // PIE CHART
+                chart = new AmCharts.AmPieChart();
+                chart.dataProvider = <?php echo $var1 ?>;
+                chart.titleField = "Age Group";
+                chart.valueField = "Value";
+                chart.outlineColor = "#FFFFFF";
+                chart.outlineAlpha = 0.8;
+                chart.outlineThickness = 2;
+                chart.balloonText = "[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>";
+                // this makes the chart 3D
+                chart.depth3D = 15;
+                chart.angle = 30;
+
+                // WRITE
+                chart.write("chartdiv");
+            });
+        </script>
 		<script src="js/jquery.min.js"></script>
 		<script src="js/jquery.dropotron.min.js"></script>
 		<script src="js/jquery.scrolly.min.js"></script>
@@ -23,35 +110,13 @@
 	</head>
 
 	
-<?php
 
-
-function connect(){
-	$link = mysql_connect('localhost', 'root', '');
-	if (!$link) {
-		die('Could not connect: ' . mysql_error());
-	}
-	// echo 'Connected successfully';
-	
-	$db_selected = mysql_select_db('code', $link);
-	if (!$db_selected) {
-		die ('Can\'t use foo : ' . mysql_error());
-	}
-	return $link;
-}
-
-function close_db(){
-	mysql_close($link);
-}
-connect();
-// print_r($_POST);
-?>
 <script>
-$(document).ready(function(){
+/*$(document).ready(function(){
     $(".butn").click(function(this){
         $("this").fadeToggle("slow");
     });
-});
+});*/
 </script>
 	<body class="homepage">
 		<h2 style="text-align: center;margin-top: 15px;margin-bottom: 50px;"><a href="#">Listed out according to the major cities.</a></h2>
@@ -73,10 +138,10 @@ $(document).ready(function(){
 										while ($row = mysql_fetch_array($result))
 										{
 											$sel="";
-											if($code==$row['code']){ 
+											if($code==$row['name']){ 
 												$sel="selected";
 											}
-											echo "<option value='".$row['code']."' ".$sel." >".$row['name']."</option>";
+											echo "<option value='".$row['name']."' ".$sel." >".$row['name']."</option>";
 										}
 									?> 
 								</select>
@@ -84,7 +149,7 @@ $(document).ready(function(){
 								<select id="sector" name="sector">
 									<option id="default" name="default" value="0">--select--</option>
 									<?php 
-										$query = "SELECT id, name FROM sector";
+										$query = "SELECT sector_id, name FROM sector";
 										$result = mysql_query($query) or die(mysql_error()."[".$query."]");
 										$code="";
 										if(isset($_POST) and isset($_POST['sector'])){ 
@@ -143,50 +208,12 @@ $(document).ready(function(){
 
 				<!-- Features -->
 				<div id="features" class="" style="margin-left: 360px;">
-					<?php foreach([1,2,3] as $i){?>
-					<div class="row" id="clickme<?php echo $i; ?>" style="padding: 0px 0 65px 100px;">
-							<h3><a href="#">Gravida aliquam penatibus</a><button class="button butn" value="Open">Open</button></h3>
-							<p>
-								Amet nullam fringilla nibh nulla convallis tique ante proin sociis accumsan lobortis. Auctor etiam
-								porttitor phasellus tempus cubilia ultrices tempor sagittis. Nisl fermentum consequat integer interdum.
-							</p>
-					</div>
-					<?php }?>
+					
+					<div id="chartdiv" style="width: 50%; height: 200px;"></div>
+					
 				</div>
 			</div>
 		<!-- Footer -->
-			<div id="footer" style="clear: both;">
-				<div class="container">
-					<div class="row">
-						<div class="12u">
-							
-							<!-- Contact -->
-								<section class="contact">
-									<header>
-										<h3>Nisl turpis nascetur interdum?</h3>
-									</header>
-									<p>Urna nisl non quis interdum mus ornare ridiculus egestas ridiculus lobortis vivamus tempor aliquet.</p>
-									<ul class="icons">
-										<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
-										<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
-										<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
-										<li><a href="#" class="icon fa-pinterest"><span class="label">Pinterest</span></a></li>
-										<li><a href="#" class="icon fa-dribbble"><span class="label">Dribbble</span></a></li>
-										<li><a href="#" class="icon fa-linkedin"><span class="label">Linkedin</span></a></li>
-									</ul>
-								</section>
-							
-							<!-- Copyright -->
-								<div class="copyright">
-									<ul class="menu">
-										<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-									</ul>
-								</div>
-							
-						</div>
-					
-					</div>
-				</div>
-			</div>
+
 	</body>
 </html>
