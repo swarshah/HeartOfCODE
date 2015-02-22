@@ -63,6 +63,16 @@ function get_city_details(){
 	}
 }
 
+function good_average_bad(){
+	if(isset($_POST) and isset($_POST['province'])){
+		// $query = "SELECT max(`totalemp`), min(`totalemp`), (select `totalemp` FROM `totalemployed` where `sector_id`= 1 and `p_id` = 4) FROM `totalemployed`;"
+		$query="set @x=0;
+				SELECT p_id, @x:=@x+1 as rank FROM `totalemployed` WHERE sector_id=".$_POST['sector']." order by totalemp desc";
+		$result = mysql_query($query) or die(mysql_error()."[".$query."]");
+		$result= mysql_result($result);
+	}
+}
+
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -194,9 +204,10 @@ $(document).ready(function(){
 		<!-- Banner -->
 					
 			<div>
-				<div id="banner" style="float:left;background-color:#2b252c;">
+				<div id="banner" style="float:left;">
 						<article id="main" class="container special" style="width: 300px;float: left;margin-left: 30px;margin-right: 30px;">
 							<form id="business-form" method="POST">
+								<h2><a href="#">Filter</a></h2>
 								<label for="province">Province</label>
 								<select id="province" name="province">
 									<option id="default" name="default" value="0">All</option>
@@ -254,18 +265,6 @@ $(document).ready(function(){
 									<input type="text" id="labour" name="labour" value="<?php if(isset($_POST) and isset($_POST['labour'])) { echo $_POST['labour'];} ?>">
 								</label>
 								
-								<div style="text-align: initial;">
-									<label style="display: inline;" for="subsidy">Subsidy</label>
-									<span style="margin-left: 40px;">
-										<input type="radio" id="yes" value="yes" name="subsidy"  <?php if(isset($_POST) and isset($_POST['subsidy']) and $_POST['subsidy']=='yes') { echo "checked";} ?>>
-										<label style="display: inline;" for="yes">Yes</label>
-									</span>
-									<span style="margin-left: 40px;">
-										<input type="radio" id="no" value="no" name="subsidy" <?php if(isset($_POST) and isset($_POST['subsidy']) and $_POST['subsidy']=='no') { echo "checked";} ?>>
-										<label style="display: inline;" for="no">No</label>
-									</span>
-								</div>
-								
 								
 								<footer>
 									<input type="submit" class="button" value="Go">
@@ -293,6 +292,39 @@ $(document).ready(function(){
 							echo "<div id='chartdiv1' style='width: 80%; height: 200px;'></div>";
 						}
 					?>
+					
+					<?php
+						if(isset($_POST) and isset($_POST['province']) and $_POST['province']!=0){
+							echo "<div id='provdiv' style='width: 50%; height: 50px;'>";
+							// $query="SELECT name FROM sector where sector_id = ".$_POST["sector"].";";
+							$query="SELECT t.p_id as pr_id, (select p.name from province p where p.p_id=t.p_id) as rank, totalemp 
+									FROM totalemployed t 
+									WHERE sector_id=".$_POST['sector']." order by totalemp desc";
+							$result = mysql_query($query);
+							 // echo $query;
+							// echo "<table>";
+							// echo "<tr><th>Rank</th><th>Name</th><th>Employee availability(x1000)</th></tr>";
+							$i=0;
+							while ($row = mysql_fetch_array($result)) {
+								$i=$i+1;
+								// echo "<tr><td>".$i."</td><td>".$row["rank"]."</td><td>".$row["totalemp"]."</td></tr>";
+								// print_r($row);
+								
+								if($row["pr_id"]==$_POST['province']){
+									if($i<4){
+										echo "<b>Indury Rating :- </b><span style='color:green;margin-left: 10px;font-weight: bold;font-size: 32px;'>Good</span>";
+									}elseif ($i<7){
+										echo "<b>Indury Rating :- </b><span style='color:blue;margin-left: 10px;font-weight: bold;font-size: 32px;'>Average</span>";
+									}else {
+										echo "<b>Indury Rating :- </b><span style='color:red;margin-left: 10px;font-weight: bold;font-size: 32px;'>Bad</span>";
+									}
+								}
+							}
+							// echo "</table>";
+							echo "</div>";
+						}
+					?>
+					
 					<?php 
 					if(isset($_POST) and isset($_POST['province'])){
 						$query="select c.c_id, c.cityname, p.p_id, p.name, wages, totalemp 
@@ -322,11 +354,15 @@ $(document).ready(function(){
 									<b>Province : <?php echo $row['name'];?></b> 
 								</p>
 								<p>
-									<b>Average Weekly wages : <?php echo "$ ".$row['wages'];?></b> 
+									<b>Average daily wages : <?php echo "$ ".round(($row['wages']/7), 2);?></b> 
 								</p>
 								<p>
-									<b>Total productive employees (x1000) : <?php echo $row['totalemp'];?></b> 
+									<b>Total employees (x1000) : <?php echo $row['totalemp'];?></b> 
 								</p>
+							</p>
+							<p>
+								<?php echo $row['cityname']." is a city in ".$row['name']." where the average weekly income is ".$row['wages']." and the total 
+								number of employees are ".($row['totalemp']*1000)."."; ?>
 							</p>
 						</div>
 						<p style="background: white;"></p>

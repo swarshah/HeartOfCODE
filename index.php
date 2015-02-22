@@ -110,21 +110,10 @@ connect();
 							</label>
 							<br>
 							
-							<div style="text-align: initial;">
-								<label style="display: inline;" for="subsidy">Subsidy</label>
-								<span style="margin-left: 100px;">
-									<input type="radio" id="yes" value="yes" name="subsidy">
-									<label style="display: inline;" for="yes">Yes</label>
-								</span>
-								<span style="margin-left: 100px;">
-									<input type="radio" id="no" value="no" name="subsidy">
-									<label style="display: inline;" for="no">No</label>
-								</span>
-							</div>
-							
 							<footer>
 								<input type="submit" class="button" value="Go">
-								<!-- <a href="#" class="button">Go</a> -->
+								<br>
+								<br>
 							</footer>
 							
 						</form>
