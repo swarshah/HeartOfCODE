@@ -281,7 +281,7 @@ $(document).ready(function(){
 					<?php
 						if(isset($_POST) and isset($_POST['province']) and $_POST['province']!=0){
 							echo "<span><b>Population by age group</b><span>";
-							echo "<div id='chartdiv' style='width: 50%; height: 200px;'></div>";
+							echo "<div id='chartdiv' style='width: 80%; height: 300px;'></div>";
 							$query="SELECT name FROM sector where sector_id = ".$_POST["sector"].";";
 							$result = mysql_query($query);
 							$name ="";
@@ -289,7 +289,7 @@ $(document).ready(function(){
 								$name = $row['name'];
 							}
 							echo "<span><b>GDP for ".$name."</b><span>";
-							echo "<div id='chartdiv1' style='width: 80%; height: 200px;'></div>";
+							echo "<div id='chartdiv1' style='width: 80%; height: 300px;'></div>";
 						}
 					?>
 					
@@ -312,11 +312,11 @@ $(document).ready(function(){
 								
 								if($row["pr_id"]==$_POST['province']){
 									if($i<4){
-										echo "<b>Indury Rating :- </b><span style='color:green;margin-left: 10px;font-weight: bold;font-size: 32px;'>Good</span>";
+										echo "<b>Industry Rating :- </b><span style='color:green;margin-left: 10px;font-weight: bold;font-size: 32px;'>Good</span>";
 									}elseif ($i<7){
-										echo "<b>Indury Rating :- </b><span style='color:blue;margin-left: 10px;font-weight: bold;font-size: 32px;'>Average</span>";
+										echo "<b>Industry Rating :- </b><span style='color:blue;margin-left: 10px;font-weight: bold;font-size: 32px;'>Average</span>";
 									}else {
-										echo "<b>Indury Rating :- </b><span style='color:red;margin-left: 10px;font-weight: bold;font-size: 32px;'>Bad</span>";
+										echo "<b>Industry Rating :- </b><span style='color:red;margin-left: 10px;font-weight: bold;font-size: 32px;'>Bad</span>";
 									}
 								}
 							}
@@ -349,7 +349,6 @@ $(document).ready(function(){
 							</button>
 						</h3>
 						<div class="row fade" id="div-<?php echo $row['c_id']; ?>" style="display:none;padding: 0px 100px 100px 100px;background: aquamarine;margin: 0px 0 0px 0px;">
-							<p>
 								<p>
 									<b>Province : <?php echo $row['name'];?></b> 
 								</p>
@@ -359,7 +358,22 @@ $(document).ready(function(){
 								<p>
 									<b>Total employees (x1000) : <?php echo $row['totalemp'];?></b> 
 								</p>
+							<br>
+							<?php if(isset($_POST) and isset($_POST['labour']) and $_POST['labour']>0){?>
+							<p>
+								<p>
+									<b>No of employees :  <?php echo $_POST['labour']; ?></b> 
+								</p>
+								<p>
+									<b>Monthly Expenses: <?php echo ($row['wages']*4);?></b> 
+								</p>
+								<p>
+									<b>Salary Budget : <?php echo "$ ".round(($row['wages']*4*$_POST['labour']), 2);?></b> 
+								</p>
 							</p>
+							<br>
+							<p>Minimum initial capital needed in Ottawa is greater than <?php echo "$ ".round(($row['wages']*4*$_POST['labour']), 2);?></p>
+							<?php }?>
 							<p>
 								<?php echo $row['cityname']." is a city in ".$row['name']." where the average weekly income is ".$row['wages']." and the total 
 								number of employees are ".($row['totalemp']*1000)."."; ?>
